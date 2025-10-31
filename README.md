@@ -1,8 +1,4 @@
-Here’s a clean, professional **Markdown (`README.md`)** version of your project documentation, formatted properly for GitHub 👇
 
----
-
-````markdown
 # 🎥 Digital Watermarking and Steganography Project
 
 This project demonstrates a **deep learning approach to video steganography**.  
@@ -30,7 +26,7 @@ Follow these steps to set up the project on your local machine.
 ```bash
 git clone <your-repository-url>
 ```
-````
+
 
 > Replace `<your-repository-url>` with the actual GitHub repository link.
 
@@ -200,7 +196,4 @@ We hope it helps you understand the power of **Deep Learning in Digital Watermar
 
 ```
 
----
 
-Would you like me to add **badges** (e.g., Python version, TensorFlow version, License, etc.) at the top for a more professional GitHub appearance?
-```
