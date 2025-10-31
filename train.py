@@ -1,22 +1,25 @@
 import os
 import glob
+import math
 import numpy as np
 import tensorflow.compat.v1 as tf # Ensure TF2 compatability
 tf.disable_v2_behavior()
 import keras
 from keras.models import Model
 from keras.layers import Dense, Input, concatenate, Conv2D, GaussianNoise
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from keras.optimizers import Adam
 import keras.backend as K
 from keras.utils import plot_model
 from keras.callbacks import TensorBoard, ModelCheckpoint, Callback, ReduceLROnPlateau
 from keras.models import load_model
-from keras.utils import multi_gpu_model
+# from keras.utils import multi_gpu_model
 from PIL import Image
 import matplotlib.pyplot as plt
 from random import randint
-import imageio
+# import imageio
+# import pydot
+
 from io import StringIO, BytesIO
 # %matplotlib inline
 
@@ -209,7 +212,7 @@ model = steg_model(pretrain=False)
 print(model.summary())
 
 # Plot graph
-plot_model(model, to_file='steg_model.png')
+# plot_model(model, to_file='steg_model.png')
 
 # Tensorboard 
 tensorboard = TensorBoard(log_dir='./logs', histogram_freq=0,
@@ -292,12 +295,9 @@ callbacks_list = [checkpoint, tensorboard, image_summary, reduce_lr]
 
 
 # Train the model
-model.fit_generator(inputgenerator, epochs=100, 
-                          steps_per_epoch = TRAIN_NUM//BATCH_SIZE,
-                          validation_data=testgenerator, 
-                          validation_steps=VAL_NUM//BATCH_SIZE,
-                          use_multiprocessing=True, 
-                          callbacks=callbacks_list)
+# train.py, line 297
+model.fit(inputgenerator, epochs=5, steps_per_epoch = math.ceil(TRAIN_NUM / BATCH_SIZE),validation_data=testgenerator, validation_steps=max(1, VAL_NUM // BATCH_SIZE), use_multiprocessing=False, workers=1, callbacks=callbacks_list)
+
 
 
 '''

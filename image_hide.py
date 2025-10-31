@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from random import randint
 import imageio
 import argparse
-from skimage.util.shape import view_as_blocks
+# from skimage.util.shape import view_as_blocks
 
 
 # Construct argument parser
@@ -52,7 +52,7 @@ def shuffle(im, inverse = False):
   cols=np.uint8(img.shape[1]/blk_size)
 
   # Create a block view on image
-  img_blks=view_as_blocks(im,block_shape=(blk_size,blk_size,3)).squeeze()
+#   img_blks=view_as_blocks(im,block_shape=(blk_size,blk_size,3)).squeeze()
   img_shuff=np.zeros((img.shape[0],img.shape[1],3),dtype=np.uint8)
 
   # Secret key maps

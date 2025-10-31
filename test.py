@@ -8,8 +8,8 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from random import randint
 import imageio
-from skimage.util.shape import view_as_blocks
-%matplotlib inline
+# from skimage.util.shape import view_as_blocks
+
 
 '''
 Test the model on sample images (unseen)

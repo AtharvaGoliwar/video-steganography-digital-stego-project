@@ -8,7 +8,8 @@ from keras.models import Model
 from keras.models import load_model
 from PIL import Image
 import argparse
-from scipy.misc import imsave
+import imageio
+# from scipy.misc import imsave
 from skimage.util.shape import view_as_blocks
 
 # Construct argument parser
@@ -107,7 +108,11 @@ while True:
             cover_batch = np.float32(cover_batch)/255.0
             
             # Save image for testing
-            imsave("test.png",cover_batch[0])             
+            image_to_save = cover_batch[0]
+            image_to_save = np.clip(image_to_save, 0.0, 1.0)
+            image_uint8 = (image_to_save * 255).astype(np.uint8)
+            imageio.imwrite("test.png", image_uint8)
+            # --- FIX #1 END ---
 
             # Predict outputs
             secretout=model.predict([normalize_batch(cover_batch)])

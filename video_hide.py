@@ -8,8 +8,9 @@ from keras.models import Model
 from keras.models import load_model
 from PIL import Image
 import argparse
-from scipy.misc import imsave
-from skimage.util.shape import view_as_blocks
+# from scipy.misc import imsave
+# from skimage.util.shape import view_as_blocks
+import imageio
 
 # Construct argument parser
 parser = argparse.ArgumentParser(description='Use block shuffle')        
@@ -118,7 +119,24 @@ while True:
             cover_batch = np.float32(cover_batch)/255.0
             
             # Save image for testing
-            imsave("test.png",secret_batch[0])             
+            # imsave("test.png",secret_batch[0])  
+            # NEW CODE
+
+            # Get the image data from the batch
+            image_to_save = secret_batch[0]
+
+            # --- FIX STARTS HERE ---
+            # 1. Clip the values to ensure they are in the valid [0.0, 1.0] range.
+            #    This prevents errors if the model outputs values slightly out of bounds.
+            image_to_save = np.clip(image_to_save, 0.0, 1.0)
+
+            # 2. Scale the pixel values from the [0.0, 1.0] range to the [0, 255] range
+            #    and convert the data type to 8-bit unsigned integers (uint8).
+            image_uint8 = (image_to_save * 255).astype(np.uint8)
+
+            # 3. Save the correctly formatted image
+            imageio.imsave("test.png", image_uint8)
+            # --- FIX ENDS HERE ---
 
             # Predict outputs
             coverout=model.predict([normalize_batch(secret_batch),normalize_batch(cover_batch)])
